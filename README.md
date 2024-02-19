@@ -20,10 +20,10 @@ This repository showcases a Spring Boot project demonstrating integration with a
 
 ## Dependencies
 
-- **Spring Boot Starter Data JPA:** Simplifies Spring Data JPA configuration.
-- **Spring Boot Starter Web:** Provides essential web support.
-- **Flyway Core:** Handles database migration tasks seamlessly.
-- **Microsoft SQL Server Driver:** Enables connectivity with MSSQL Server.
+- **Spring Boot Starter Data JPA
+- **Spring Boot Starter Web
+- **Flyway Core
+- **Microsoft SQL Server Driver
 
 ## Usage
 
