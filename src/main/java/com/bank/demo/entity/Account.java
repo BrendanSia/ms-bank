@@ -1,10 +1,12 @@
 package com.bank.demo.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.UUID;
 
 @Entity
+@Data
 @Table(name = "account")
 public class Account {
     @Id
