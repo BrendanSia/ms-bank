@@ -5,6 +5,8 @@ import com.bank.demo.model.response.CustomerListResp;
 import com.bank.demo.model.response.CustomerResp;
 import com.bank.demo.service.CustomerService;
 import com.bank.demo.service.ThirdPartyApiService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.*;
@@ -16,7 +18,7 @@ import java.util.UUID;
 @RequestMapping("/api/customers")
 public class Controller {
 
-    //private static final Logger logger = LoggerFactory.getLogger(Controller.class);
+    private static final Logger logger = LoggerFactory.getLogger(Controller.class);
 
     @Autowired
     private CustomerService customerService;
@@ -29,10 +31,14 @@ public class Controller {
             @PathVariable("customerId") UUID customerId
     ) {
         try {
+            logger.info("GET /api/customers/{}", customerId);
+
             CustomerDTO customerDTO = customerService.getCustomerById(customerId);
             if (customerDTO != null) {
+                logger.info("Response: {}", customerDTO);
                 return ResponseEntity.ok().body(new CustomerResp<>("SUCCESS", customerDTO));
             } else {
+                logger.info("Response: Customer not found with id: {}", customerId);
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body(new CustomerResp<>("FAILED", "Customer not found with id: " + customerId));
             }
@@ -49,6 +55,7 @@ public class Controller {
             @RequestParam(defaultValue = "10") int size) {
         try {
             Page<CustomerDTO> customerPage = customerService.getCustomers(page - 1, size);
+            logger.info("Response: {}", customerPage);
             return ResponseEntity.ok().body(new CustomerListResp("SUCCESS", customerPage.getContent(), customerPage.getTotalElements()));
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,6 +68,8 @@ public class Controller {
             @RequestParam String action,
             @RequestBody CustomerDTO customerDTO) {
         try {
+            logger.info("GET /api/customers/processCustomer", customerDTO);
+
             customerService.processCustomer(action, customerDTO);
             return ResponseEntity.ok("Customer " + action.toLowerCase() + "d successfully");
         } catch (IllegalArgumentException e) {
@@ -77,7 +86,6 @@ public class Controller {
             String response = thirdPartyApiService.callThirdPartyApi();
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            // Log the exception
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to call third-party API");
         }
