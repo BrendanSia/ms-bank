@@ -38,7 +38,7 @@ public class CustomerService {
 
             return customerDTO;
         } else {
-            return null; // Or throw an exception if needed
+            return null;
         }
     }
 
