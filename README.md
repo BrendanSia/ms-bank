@@ -35,7 +35,7 @@ This repository showcases a Spring Boot project demonstrating integration with a
 5. Review API interactions within the codebase.
 
 ## Logging Configuration
-Logging in this project is configured using Logback. Logs are written to the application.log file by default. You can customize the logging configuration in the logback.xml file located in the src/main/resources directory. To clear the log file, you can manually delete it or implement custom logic to clear it programmatically.
+In this project, Logback is used for logging. By default, logs go into the application.log file. You can change how logging works by editing the logback.xml file in the src/main/resources directory.
 
 ## Contribution
 
